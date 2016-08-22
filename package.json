@@ -1,0 +1,96 @@
+{
+  "name": "sonarlint",
+  "displayName": "SonarLint for Visual Studio Code",
+  "description": "SonarLint support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.",
+  "icon": "images/SBIcon.png",
+  "version": "1.0.0",
+  "publisher": "silverbulleters",
+  "galleryBanner": {
+    "color": "#FFFFFF",
+    "theme": "dark"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/silverbulleters/sonarlint/issues"
+  },
+  "homepage": "https://github.com/silverbulleters/sonarlint/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/silverbulleters/sonarlint.git"
+  },
+  "categories": [
+    "Languages"
+  ],
+  "engines": {
+    "vscode": "^1.4.0"
+  },
+  "badges": [
+    {
+      "url": "https://david-dm.org/silverbulleters/sonarlint.svg",
+      "href": "https://david-dm.org/silverbulleters/sonarlint",
+      "description": "Dependency Status"
+    }
+  ],
+  "main": "./out/src/extension",
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "sonarlint.analyzeProject",
+        "title": "Analyze current project",
+        "category": "SonarLint"
+      }
+    ],
+    "configuration": {
+      "title": "SonarLint configuration",
+      "properties": {
+        "sonarlint.enableLinter": {
+          "description": "Lint project through SonarLint",
+          "type": "boolean",
+          "default": true
+        },
+        "sonarlint.sonarlintPath": {
+          "description": "Full path to sonarlint binary. Fill this only if sonarlint is not in your $PATH",
+          "type": "string",
+          "default": ""
+        },
+        "sonarlint.sourcePath": {
+          "description": "GLOB pattern to identify source files",
+          "type": "string",
+          "default": ""
+        },
+        "sonarlint.testsPath": {
+          "description": "GLOB pattern to identify test files",
+          "type": "string",
+          "default": ""
+        },
+        "sonarlint.exclude": {
+          "description": "GLOB pattern to exclude files",
+          "type": "string",
+          "default": ""
+        },
+        "sonarlint.sourceEncoding": {
+          "description": "Character encoding of the source files",
+          "type": "string",
+          "default": "UTF-8"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "typescript": "^1.6.2",
+    "vsce": "^1.8.1",
+    "vscode": "^0.11.17"
+  },
+  "dependencies": {
+    "cross-spawn": "^4.0.0",
+    "glob": "^7.0.5"
+  }
+}
