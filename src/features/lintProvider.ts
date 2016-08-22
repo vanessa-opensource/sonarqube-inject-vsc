@@ -21,13 +21,6 @@ export default class LintProvider {
         this.diagnosticSeverityMap.set("BLOCKER", vscode.DiagnosticSeverity.Error);
 
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection();
-        vscode.workspace.onDidOpenTextDocument(this.doLint, this, subscriptions);
-        vscode.workspace.onDidCloseTextDocument(
-            (textDocument) => {
-                this.diagnosticCollection.delete(textDocument.uri);
-            },
-            undefined,
-            subscriptions);
         vscode.workspace.onDidSaveTextDocument(this.doLint, this);
         if (!this.statusBarItem) {
             this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
