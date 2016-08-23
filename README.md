@@ -24,29 +24,29 @@ Default value: empty.
 GLOB pattern to identify source files.  
 Type: String
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
-Default value: empty.
+Default value: empty.  
 Example: `src/main/*.java`
 
 * `sonarlint.testsPath`  
 GLOB pattern to identify test files.  
 Type: String
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
-Default value: empty.
+Default value: empty.  
 Example: `src/test/*.java`
 
 * `sonarlint.exclude`  
 GLOB pattern to exclude files.  
 Type: String
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
-Default value: empty.
+Default value: empty.  
 Example: `**/*.properties`
 
 * `sonarlint.sourceEncoding`  
 Character encoding of the source files.  
-Type: String
+Type: String  
 Default value: `UTF-8`.
 
-> Hint:  
+> **Hint**:  
 If you need to specify multiply paths in GLOB patterns, you can use `{path1,path2}' notation.
 
 ## Extension commands
