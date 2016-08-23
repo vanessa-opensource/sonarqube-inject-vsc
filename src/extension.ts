@@ -15,4 +15,9 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand("sonarlint.analyzeProject", () => {
         linter.doLint();
     }));
+
+    context.subscriptions.push(vscode.commands.registerCommand("sonarlint.updateBindings", () => {
+        linter.updateBindings();
+        linter.doLint();
+    }));
 }

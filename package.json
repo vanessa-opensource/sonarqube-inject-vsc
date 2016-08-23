@@ -46,6 +46,11 @@
         "command": "sonarlint.analyzeProject",
         "title": "Analyze current project",
         "category": "SonarLint"
+      },
+      {
+        "command": "sonarlint.updateBindings",
+        "title": "Update bindings to SonarQube server",
+        "category": "SonarLint"
       }
     ],
     "configuration": {

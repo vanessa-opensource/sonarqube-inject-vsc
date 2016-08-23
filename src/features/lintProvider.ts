@@ -81,12 +81,8 @@ export default class LintProvider {
             args.push(charset);
         }
 
-        let options = {
-            cwd: vscode.workspace.rootPath,
-            env: process.env
-        };
         let result = "";
-        let sonarLintCS = spawn(this.commandId, args, options).on('error', function (err) { throw err });
+        let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
         sonarLintCS.stderr.on("data", function (buffer) {
             result += buffer.toString();
         });
@@ -138,6 +134,19 @@ export default class LintProvider {
 
     };
 
+    public updateBindings() {
+        let args: Array<String> = ['-u'];
+        let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
+    }
+
+    private getSpawnOptions(): Object {
+        let options = {
+            cwd: vscode.workspace.rootPath,
+            env: process.env
+        };
+        return options;
+    }    
+    
     private getCommandId(): string {
         let command = "";
         let commandConfig = vscode.workspace.getConfiguration("sonarlint").get("sonarlintPath");
