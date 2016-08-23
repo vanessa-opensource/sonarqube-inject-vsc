@@ -11,32 +11,32 @@ Adds SonarLint support in your editor.
 
 * `sonarlint.enableLinter`  
 Enables linting projects through SonarLint.  
-Type: Boolean
+Type: Boolean  
 Default value: `true`.
 
 * `sonarlint.sonarlintPath`  
 Full path to sonarlint binary. Fill this only if sonarlint is not in your $PATH.  
-Type: String
+Type: String  
 Format: relative (from workspace root) or absulute to `sonarlint` executable.  
 Default value: empty.
 
 * `sonarlint.sourcePath`  
 GLOB pattern to identify source files.  
-Type: String
+Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
 Example: `src/main/*.java`
 
 * `sonarlint.testsPath`  
 GLOB pattern to identify test files.  
-Type: String
+Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
 Example: `src/test/*.java`
 
 * `sonarlint.exclude`  
 GLOB pattern to exclude files.  
-Type: String
+Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
 Example: `**/*.properties`
