@@ -1,11 +1,6 @@
 # SonarLint Visual Studio Code Plugin
 
-Adds SonarLint support in your editor.
-
-## Working features
-
-* [x] standalone mode
-* [x] connected mode
+SonarLint support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.
 
 ## Extension settings
 
