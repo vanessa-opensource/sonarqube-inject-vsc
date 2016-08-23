@@ -57,7 +57,7 @@ export default class LintProvider {
         let exclude = String(configuration.get("exclude"));
         let charset = String(configuration.get("sourceEncoding"));
 
-        let args = [];
+        let args = ['--reportType', 'console'];
 
         if (textDocument) {
             sourcePath = path.relative(vscode.workspace.rootPath, textDocument.uri.fsPath);
@@ -97,7 +97,7 @@ export default class LintProvider {
             try {
                 result = result.trim();
                 let lines = result.split(/\r?\n/);
-                let regex = /^.*\{(.*)\}\s+\{(.*)\} \{(\d+):(\d+)\s-\s(\d+):(\d+)\}\s+\{(.*)\}/;
+                let regex = /^.*\{(.*)\}\s+\{(.*)\}\s+\{(\d+):(\d+)\s-\s(\d+):(\d+)\}\s+\{(.*)\}\s+\{(.*)\}/;
                 let vscodeDiagnosticArray: [vscode.Uri, vscode.Diagnostic[]][] = [];
                 let diagnosticFileMap = new Map<string, Array<string>>();
                 for (let line in lines) {
@@ -108,7 +108,7 @@ export default class LintProvider {
                                 new vscode.Position(+match[3] - 1, +match[4]),
                                 new vscode.Position(+match[5] - 1, +match[6])
                                 );
-                        let vscodeDiagnostic = new vscode.Diagnostic(range, match[7], this.diagnosticSeverityMap.get(match[2]));
+                        let vscodeDiagnostic = new vscode.Diagnostic(range, match[8], this.diagnosticSeverityMap.get(match[2]));
                         vscodeDiagnostic.source = "sonarlint";
                         let fileUri: vscode.Uri = vscode.Uri.file(match[1]);
                         vscodeDiagnosticArray.push([fileUri, [vscodeDiagnostic]]);
