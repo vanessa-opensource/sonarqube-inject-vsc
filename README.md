@@ -63,6 +63,17 @@ Don't forget to run `SonarLint: Update bindings to SonarQube server` command in 
 
 Currently works only with speacial manualy built `sonarlint` version. Source code can be found [here](https://github.com/nixel2007/sonarlint-cli/tree/feature/console-analysis).
 
+## Supported languages
+
+* java
+* javascript
+* php
+* python
+* cobol
+* abap
+* plsql
+* swift
+
 ## Screenshot
 
 ![default](https://cloud.githubusercontent.com/assets/1132840/17891093/7c840dfe-6942-11e6-8452-a8ef23faa951.PNG)
