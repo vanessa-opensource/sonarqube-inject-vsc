@@ -73,6 +73,7 @@ Currently works only with speacial manualy built `sonarlint` version. Source cod
 * abap
 * plsql
 * swift
+* bsl
 
 ## Screenshot
 
