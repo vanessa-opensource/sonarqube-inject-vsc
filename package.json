@@ -11,12 +11,12 @@
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
-    "url": "https://github.com/silverbulleters/sonarlint/issues"
+    "url": "https://github.com/silverbulleters/sonarlint-vsc/issues"
   },
-  "homepage": "https://github.com/silverbulleters/sonarlint/blob/master/README.md",
+  "homepage": "https://github.com/silverbulleters/sonarlint-vsc/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/silverbulleters/sonarlint.git"
+    "url": "https://github.com/silverbulleters/sonarlint-vsc.git"
   },
   "categories": [
     "Languages"
@@ -26,8 +26,8 @@
   },
   "badges": [
     {
-      "url": "https://david-dm.org/silverbulleters/sonarlint.svg",
-      "href": "https://david-dm.org/silverbulleters/sonarlint",
+      "url": "https://david-dm.org/silverbulleters/sonarlint-vsc.svg",
+      "href": "https://david-dm.org/silverbulleters/sonarlint-vsc",
       "description": "Dependency Status"
     }
   ],
