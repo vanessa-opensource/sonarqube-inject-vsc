@@ -54,6 +54,13 @@ If you need to specify multiply paths in GLOB patterns, you can use `{path1,path
 * `SonarLint: Analyze current project`  
 Runs full analysis on current project
 
+## Connected mode
+
+You can run analysis with connection to your SonarQube server.
+
+To do this you need to create two small config files - follow the instructions on [SonarLint website](http://www.sonarlint.org/commandline/index.html), section `Connected mode`.  
+Don't forget to run `sonarlint -u` in your project workspace to update bindings.
+
 ## Limitations
 
 Currently works only with speacial manualy built `sonarlint` version. Source code can be found [here](https://github.com/nixel2007/sonarlint-cli/tree/feature/console-analysis).
