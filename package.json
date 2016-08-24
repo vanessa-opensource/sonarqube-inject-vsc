@@ -96,6 +96,7 @@
   },
   "dependencies": {
     "cross-spawn": "^4.0.0",
-    "glob": "^7.0.5"
+    "glob": "^7.0.5",
+    "iconv-lite": "^0.4.13"
   }
 }

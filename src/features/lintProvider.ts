@@ -2,6 +2,7 @@
 
 import * as vscode from "vscode";
 import * as path from "path";
+let iconv = require('iconv-lite');
 let spawn = require("cross-spawn");
 let glob = require('glob')
 
@@ -84,10 +85,10 @@ export default class LintProvider {
         let result = "";
         let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
         sonarLintCS.stderr.on("data", function (buffer) {
-            result += buffer.toString();
+            result += iconv.decode(buffer, "windows-1251");
         });
         sonarLintCS.stdout.on("data", function (buffer) {
-            result += buffer.toString();
+            result += iconv.decode(buffer, "windows-1251");
         });
         sonarLintCS.on("close", () => {
             try {
