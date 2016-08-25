@@ -1,6 +1,7 @@
 "use strict";
 
 import * as vscode from "vscode";
+import * as os from "os";
 import * as path from "path";
 let iconv = require('iconv-lite');
 let spawn = require("cross-spawn");
@@ -58,6 +59,19 @@ export default class LintProvider {
         let exclude = String(configuration.get("exclude"));
         let charset = String(configuration.get("sourceEncoding"));
 
+        let consoleEncoding: String;
+        let consoleEncodingDefaultValue: String;
+        if (this.isWindows) {
+            consoleEncoding = String(configuration.get("windowsConsoleEncoding"));
+            consoleEncodingDefaultValue = "windows-1251"; 
+        } else {
+            consoleEncoding = String(configuration.get("unixConsoleEncoding"));
+            consoleEncodingDefaultValue = "utf8";             
+        }
+        if (!consoleEncoding) {
+            consoleEncoding = consoleEncodingDefaultValue;
+        }
+
         let args = ['--reportType', 'console'];
 
         if (textDocument) {
@@ -85,10 +99,10 @@ export default class LintProvider {
         let result = "";
         let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
         sonarLintCS.stderr.on("data", function (buffer) {
-            result += iconv.decode(buffer, "windows-1251");
+            result += iconv.decode(buffer, consoleEncoding);
         });
         sonarLintCS.stdout.on("data", function (buffer) {
-            result += iconv.decode(buffer, "windows-1251");
+            result += iconv.decode(buffer, consoleEncoding);
         });
         sonarLintCS.on("close", () => {
             try {
@@ -159,5 +173,8 @@ export default class LintProvider {
         return command;
     };
 
+    private isWindows(): boolean {
+        return os.platform() == "win32";
+    }
 }
 

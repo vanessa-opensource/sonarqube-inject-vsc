@@ -41,6 +41,16 @@ Character encoding of the source files.
 Type: String  
 Default value: `UTF-8`.
 
+* `sonarlint.windowsConsoleEncoding`  
+Output encoding of Windows command line. Used only on Windows.  
+Type: String  
+Default value: `windows-1251`.
+
+* `sonarlint.unixConsoleEncoding`  
+Output encoding of command line on *nix systems.   
+Type: String  
+Default value: `utf8`.
+
 > **Hint**:  
 If you need to specify multiply paths in GLOB patterns, you can use `{path1,path2}' notation.
 

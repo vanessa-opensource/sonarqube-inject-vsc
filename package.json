@@ -85,6 +85,16 @@
           "description": "Character encoding of the source files",
           "type": "string",
           "default": "UTF-8"
+        },
+        "sonarlint.windowsConsoleEncoding": {
+          "description": "Output encoding of Windows command line. Used only on Windows.",
+          "type": "string",
+          "default": "cp1251"
+        },
+        "sonarlint.unixConsoleEncoding": {
+          "description": "Output encoding of command line on *nix systems.",
+          "type": "string",
+          "default": "utf8"
         }
       }
     }
