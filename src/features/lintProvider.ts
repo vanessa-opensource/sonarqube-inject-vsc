@@ -54,11 +54,6 @@ export default class LintProvider {
             this.diagnosticCollection.clear();
         }
 
-        let sourcePath = String(configuration.get("sourcePath"));
-        let testsPath = String(configuration.get("testsPath"));
-        let exclude = String(configuration.get("exclude"));
-        let charset = String(configuration.get("sourceEncoding"));
-
         let consoleEncoding: String;
         let consoleEncodingDefaultValue: String;
         if (this.isWindows) {
@@ -72,29 +67,7 @@ export default class LintProvider {
             consoleEncoding = consoleEncodingDefaultValue;
         }
 
-        let args = ['--reportType', 'console'];
-
-        if (textDocument) {
-            sourcePath = path.relative(vscode.workspace.rootPath, textDocument.uri.fsPath);
-            sourcePath = sourcePath.replace(/\\/g, "/");
-        }
-
-        if (sourcePath) {
-            args.push('--src');
-            args.push(sourcePath);
-        }
-        if (testsPath) {
-            args.push('--tests');
-            args.push(testsPath);
-        }
-        if (exclude) {
-            args.push('--exclude');
-            args.push(exclude);
-        }
-        if (charset) {
-            args.push('--charset');
-            args.push(charset);
-        }
+        let args = this.getSpawnArgs(textDocument);
 
         let result = "";
         let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
@@ -150,7 +123,9 @@ export default class LintProvider {
     };
 
     public updateBindings() {
-        let args: Array<String> = ['-u'];
+        let args: Array<String> = this.getSpawnArgs();
+        args.push('-u');
+
         let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
     }
 
@@ -162,6 +137,42 @@ export default class LintProvider {
         return options;
     }    
     
+    private getSpawnArgs(textDocument?: vscode.TextDocument): Array<String> {
+        
+        let configuration = vscode.workspace.getConfiguration("sonarlint");
+
+        let sourcePath = String(configuration.get("sourcePath"));
+        let testsPath = String(configuration.get("testsPath"));
+        let exclude = String(configuration.get("exclude"));
+        let charset = String(configuration.get("sourceEncoding"));
+
+        let args = ['--reportType', 'console'];
+
+        if (textDocument) {
+            sourcePath = path.relative(vscode.workspace.rootPath, textDocument.uri.fsPath);
+            sourcePath = sourcePath.replace(/\\/g, "/");
+        }
+
+        if (sourcePath) {
+            args.push('--src');
+            args.push(sourcePath);
+        }
+        if (testsPath) {
+            args.push('--tests');
+            args.push(testsPath);
+        }
+        if (exclude) {
+            args.push('--exclude');
+            args.push(exclude);
+        }
+        if (charset) {
+            args.push('--charset');
+            args.push(charset);
+        }
+        
+        return args;
+    }
+
     private getCommandId(): string {
         let command = "";
         let commandConfig = vscode.workspace.getConfiguration("sonarlint").get("sonarlintPath");
