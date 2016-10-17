@@ -69,7 +69,7 @@
         "sonarqube-inject.sourcePath": {
           "description": "GLOB pattern to identify source files",
           "type": "string",
-          "default": ""
+          "default": "src/**/*.*"
         },
         "sonarqube-inject.testsPath": {
           "description": "GLOB pattern to identify test files",
