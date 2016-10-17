@@ -52,18 +52,7 @@ export default class LintProvider {
             this.diagnosticCollection.clear();
         }
 
-        let consoleEncoding: String;
-        let consoleEncodingDefaultValue: String;
-        if (this.isWindows) {
-            consoleEncoding = String(configuration.get("windowsConsoleEncoding"));
-            consoleEncodingDefaultValue = "windows-1251";
-        } else {
-            consoleEncoding = String(configuration.get("unixConsoleEncoding"));
-            consoleEncodingDefaultValue = "utf8";
-        }
-        if (!consoleEncoding) {
-            consoleEncoding = consoleEncodingDefaultValue;
-        }
+        let consoleEncoding = this.getConsoleEncoding();
 
         let args = this.getSpawnArgs(textDocument);
 
@@ -128,11 +117,21 @@ export default class LintProvider {
         let args: Array<String> = this.getSpawnArgs();
         args.push('-u');
 
+        let consoleEncoding = this.getConsoleEncoding();
+        let result = "";
+
         let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', (err) => {
             console.log(err);
             vscode.window.showErrorMessage(String(err));
         });
+        sonarLintCS.stderr.on("data", function (buffer) {
+            result += iconv.decode(buffer, consoleEncoding);
+        });
+        sonarLintCS.stdout.on("data", function (buffer) {
+            result += iconv.decode(buffer, consoleEncoding);
+        });
         sonarLintCS.on("close", () => {
+            console.log(result);
             vscode.window.showInformationMessage("Bindings updated successefully.")
         });
     }
@@ -191,6 +190,23 @@ export default class LintProvider {
         }
         return command;
     };
+
+    private getConsoleEncoding(): string {
+        let configuration = vscode.workspace.getConfiguration("sonarqube-inject");
+        let consoleEncoding: string;
+        let consoleEncodingDefaultValue: string;
+        if (this.isWindows) {
+            consoleEncoding = String(configuration.get("windowsConsoleEncoding"));
+            consoleEncodingDefaultValue = "windows-1251";
+        } else {
+            consoleEncoding = String(configuration.get("unixConsoleEncoding"));
+            consoleEncodingDefaultValue = "utf8";
+        }
+        if (!consoleEncoding) {
+            consoleEncoding = consoleEncodingDefaultValue;
+        }
+        return consoleEncoding;
+    }
 
     private isWindows(): boolean {
         return os.platform() == "win32";
