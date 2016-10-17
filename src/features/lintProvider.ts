@@ -56,10 +56,10 @@ export default class LintProvider {
         let consoleEncodingDefaultValue: String;
         if (this.isWindows) {
             consoleEncoding = String(configuration.get("windowsConsoleEncoding"));
-            consoleEncodingDefaultValue = "windows-1251"; 
+            consoleEncodingDefaultValue = "windows-1251";
         } else {
             consoleEncoding = String(configuration.get("unixConsoleEncoding"));
-            consoleEncodingDefaultValue = "utf8";             
+            consoleEncodingDefaultValue = "utf8";
         }
         if (!consoleEncoding) {
             consoleEncoding = consoleEncodingDefaultValue;
@@ -68,7 +68,10 @@ export default class LintProvider {
         let args = this.getSpawnArgs(textDocument);
 
         let result = "";
-        let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', function (err) { throw err });
+        let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', (err) => {
+            console.log(err);
+            vscode.window.showErrorMessage(String(err));
+        });
         sonarLintCS.stderr.on("data", function (buffer) {
             result += iconv.decode(buffer, consoleEncoding);
         });
@@ -87,9 +90,9 @@ export default class LintProvider {
                     match = lines[line].match(regex);
                     if (match) {
                         let range = new vscode.Range(
-                                new vscode.Position(+match[3] - 1, +match[4]),
-                                new vscode.Position(+match[5] - 1, +match[6])
-                                );
+                            new vscode.Position(+match[3] - 1, +match[4]),
+                            new vscode.Position(+match[5] - 1, +match[6])
+                        );
                         let vscodeDiagnostic = new vscode.Diagnostic(range, match[8], this.diagnosticSeverityMap.get(match[2]));
                         vscodeDiagnostic.source = "sonarqube-inject";
                         let fileUri: vscode.Uri = vscode.Uri.file(match[1]);
@@ -113,8 +116,9 @@ export default class LintProvider {
                 } else {
                     this.statusBarItem.hide();
                 }
-            } catch (e) {
-                console.error(e);
+            } catch (err) {
+                console.log(err);
+                vscode.window.showErrorMessage(String(err));
             }
         });
 
@@ -124,7 +128,13 @@ export default class LintProvider {
         let args: Array<String> = this.getSpawnArgs();
         args.push('-u');
 
-        let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', function (err) { throw err });
+        let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', (err) => {
+            console.log(err);
+            vscode.window.showErrorMessage(String(err));
+        });
+        sonarLintCS.on("close", () => {
+            vscode.window.showInformationMessage("Bindings updated successefully.")
+        });
     }
 
     private getSpawnOptions(): Object {
@@ -133,10 +143,10 @@ export default class LintProvider {
             env: process.env
         };
         return options;
-    }    
-    
+    }
+
     private getSpawnArgs(textDocument?: vscode.TextDocument): Array<String> {
-        
+
         let configuration = vscode.workspace.getConfiguration("sonarqube-inject");
 
         let sourcePath = String(configuration.get("sourcePath"));
@@ -173,7 +183,7 @@ export default class LintProvider {
 
     private getCommandId(): string {
         let command = "";
-        let commandConfig = vscode.workspace.getConfiguration("sonarqube-inject").get("sonarqube-injectPath");
+        let commandConfig = vscode.workspace.getConfiguration("sonarqube-inject").get("sonarlintPath");
         if (!commandConfig || String(commandConfig).length === 0) {
             command = path.resolve(__filename, "./../../../../tools/sonarlint-cli/bin/sonarlint");
         } else {
