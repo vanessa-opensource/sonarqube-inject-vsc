@@ -21,14 +21,14 @@ GLOB pattern to identify source files.
 Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
-Example: `src/main/*.java`
+Example: `src/main/**/*.java`
 
 * `sonarqube-inject.testsPath`  
 GLOB pattern to identify test files.  
 Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
-Example: `src/test/*.java`
+Example: `src/test/**/*.java`
 
 * `sonarqube-inject.exclude`  
 GLOB pattern to exclude files.  
