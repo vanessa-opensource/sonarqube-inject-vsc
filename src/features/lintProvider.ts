@@ -37,7 +37,7 @@ export default class LintProvider {
     }
 
     public doLint(textDocument?: vscode.TextDocument) {
-        let configuration = vscode.workspace.getConfiguration("sonarlint");
+        let configuration = vscode.workspace.getConfiguration("sonarqube-inject");
         let linterEnabled = Boolean(configuration.get("enableLinter"));
         if (!linterEnabled) {
             return;
@@ -91,7 +91,7 @@ export default class LintProvider {
                                 new vscode.Position(+match[5] - 1, +match[6])
                                 );
                         let vscodeDiagnostic = new vscode.Diagnostic(range, match[8], this.diagnosticSeverityMap.get(match[2]));
-                        vscodeDiagnostic.source = "sonarlint";
+                        vscodeDiagnostic.source = "sonarqube-inject";
                         let fileUri: vscode.Uri = vscode.Uri.file(match[1]);
                         vscodeDiagnosticArray.push([fileUri, [vscodeDiagnostic]]);
                     }
@@ -137,7 +137,7 @@ export default class LintProvider {
     
     private getSpawnArgs(textDocument?: vscode.TextDocument): Array<String> {
         
-        let configuration = vscode.workspace.getConfiguration("sonarlint");
+        let configuration = vscode.workspace.getConfiguration("sonarqube-inject");
 
         let sourcePath = String(configuration.get("sourcePath"));
         let testsPath = String(configuration.get("testsPath"));
@@ -173,7 +173,7 @@ export default class LintProvider {
 
     private getCommandId(): string {
         let command = "";
-        let commandConfig = vscode.workspace.getConfiguration("sonarlint").get("sonarlintPath");
+        let commandConfig = vscode.workspace.getConfiguration("sonarqube-inject").get("sonarqube-injectPath");
         if (!commandConfig || String(commandConfig).length === 0) {
             command = path.resolve(__filename, "./../../../../tools/sonarlint-cli/bin/sonarlint");
         } else {

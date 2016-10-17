@@ -1,52 +1,53 @@
-# SonarLint Visual Studio Code Plugin
+# SonarQube support for Visual Studio Code extension
 
-SonarLint support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.
+SonarQube support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.  
+Non-official realization of SonarLint for VS Code.
 
 ## Extension settings
 
-* `sonarlint.enableLinter`  
+* `sonarqube-inject.enableLinter`  
 Enables linting projects through SonarLint.  
 Type: Boolean  
 Default value: `true`.
 
-* `sonarlint.sonarlintPath`  
+* `sonarqube-inject.sonarlintPath`  
 Full path to sonarlint binary. Fill this only if you use custom version of `sonarlint`.  
 Type: String  
 Format: relative (from workspace root) or absulute to `sonarlint` executable.  
 Default value: `tools/sonarlint-cli/bin/sonarlint` (relative to the extension path).
 
-* `sonarlint.sourcePath`  
+* `sonarqube-inject.sourcePath`  
 GLOB pattern to identify source files.  
 Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
 Example: `src/main/*.java`
 
-* `sonarlint.testsPath`  
+* `sonarqube-inject.testsPath`  
 GLOB pattern to identify test files.  
 Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
 Example: `src/test/*.java`
 
-* `sonarlint.exclude`  
+* `sonarqube-inject.exclude`  
 GLOB pattern to exclude files.  
 Type: String  
 Format: GLOB syntax is close to regexp and can be found on [Wikipedia article](https://en.wikipedia.org/wiki/Glob_(programming)).  
 Default value: empty.  
 Example: `**/*.properties`
 
-* `sonarlint.sourceEncoding`  
+* `sonarqube-inject.sourceEncoding`  
 Character encoding of the source files.  
 Type: String  
 Default value: `UTF-8`.
 
-* `sonarlint.windowsConsoleEncoding`  
+* `sonarqube-inject.windowsConsoleEncoding`  
 Output encoding of Windows command line. Used only on Windows.  
 Type: String  
 Default value: `windows-1251`.
 
-* `sonarlint.unixConsoleEncoding`  
+* `sonarqube-inject.unixConsoleEncoding`  
 Output encoding of command line on *nix systems.   
 Type: String  
 Default value: `utf8`.

@@ -12,11 +12,11 @@ export function activate(context: vscode.ExtensionContext) {
     let linter = new LintProvider();
     linter.activate(context.subscriptions);
 
-    context.subscriptions.push(vscode.commands.registerCommand("sonarlint.analyzeProject", () => {
+    context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.analyzeProject", () => {
         linter.doLint();
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand("sonarlint.updateBindings", () => {
+    context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.updateBindings", () => {
         linter.updateBindings();
         linter.doLint();
     }));

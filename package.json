@@ -1,7 +1,7 @@
 {
-  "name": "sonarlint",
-  "displayName": "SonarLint for Visual Studio Code",
-  "description": "SonarLint support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.",
+  "name": "sonarqube-inject",
+  "displayName": "SonarQube support for Visual Studio Code",
+  "description": "SonarQube support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.",
   "icon": "images/SBIcon.png",
   "version": "0.9.0",
   "publisher": "silverbulleters",
@@ -11,12 +11,12 @@
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
-    "url": "https://github.com/silverbulleters/sonarlint-vsc/issues"
+    "url": "https://github.com/silverbulleters/sonarqube-inject-vsc/issues"
   },
-  "homepage": "https://github.com/silverbulleters/sonarlint-vsc/blob/master/README.md",
+  "homepage": "https://github.com/silverbulleters/sonarqube-inject-vsc/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/silverbulleters/sonarlint-vsc.git"
+    "url": "https://github.com/silverbulleters/sonarqube-inject-vsc.git"
   },
   "categories": [
     "Languages"
@@ -26,8 +26,8 @@
   },
   "badges": [
     {
-      "url": "https://david-dm.org/silverbulleters/sonarlint-vsc.svg",
-      "href": "https://david-dm.org/silverbulleters/sonarlint-vsc",
+      "url": "https://david-dm.org/silverbulleters/sonarqube-inject-vsc.svg",
+      "href": "https://david-dm.org/silverbulleters/sonarqube-inject-vsc",
       "description": "Dependency Status"
     }
   ],
@@ -43,55 +43,55 @@
   "contributes": {
     "commands": [
       {
-        "command": "sonarlint.analyzeProject",
+        "command": "sonarqube-inject.analyzeProject",
         "title": "Analyze current project",
-        "category": "SonarLint"
+        "category": "SonarQube Inject"
       },
       {
-        "command": "sonarlint.updateBindings",
+        "command": "sonarqube-inject.updateBindings",
         "title": "Update bindings to SonarQube server",
-        "category": "SonarLint"
+        "category": "SonarQube Inject"
       }
     ],
     "configuration": {
-      "title": "SonarLint configuration",
+      "title": "SonarQube Inject configuration",
       "properties": {
-        "sonarlint.enableLinter": {
+        "sonarqube-inject.enableLinter": {
           "description": "Lint project through SonarLint",
           "type": "boolean",
           "default": true
         },
-        "sonarlint.sonarlintPath": {
+        "sonarqube-inject.sonarlintPath": {
           "description": "Full path to sonarlint binary. Fill this only if sonarlint is not in your $PATH",
           "type": "string",
           "default": ""
         },
-        "sonarlint.sourcePath": {
+        "sonarqube-inject.sourcePath": {
           "description": "GLOB pattern to identify source files",
           "type": "string",
           "default": ""
         },
-        "sonarlint.testsPath": {
+        "sonarqube-inject.testsPath": {
           "description": "GLOB pattern to identify test files",
           "type": "string",
           "default": ""
         },
-        "sonarlint.exclude": {
+        "sonarqube-inject.exclude": {
           "description": "GLOB pattern to exclude files",
           "type": "string",
           "default": ""
         },
-        "sonarlint.sourceEncoding": {
+        "sonarqube-inject.sourceEncoding": {
           "description": "Character encoding of the source files",
           "type": "string",
           "default": "UTF-8"
         },
-        "sonarlint.windowsConsoleEncoding": {
+        "sonarqube-inject.windowsConsoleEncoding": {
           "description": "Output encoding of Windows command line. Used only on Windows.",
           "type": "string",
           "default": "cp1251"
         },
-        "sonarlint.unixConsoleEncoding": {
+        "sonarqube-inject.unixConsoleEncoding": {
           "description": "Output encoding of command line on *nix systems.",
           "type": "string",
           "default": "utf8"
