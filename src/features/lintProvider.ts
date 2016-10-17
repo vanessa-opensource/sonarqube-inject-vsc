@@ -169,7 +169,7 @@ export default class LintProvider {
             args.push('--charset');
             args.push(charset);
         }
-        
+
         return args;
     }
 

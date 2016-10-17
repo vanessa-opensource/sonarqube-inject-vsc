@@ -22,7 +22,7 @@
     "Languages"
   ],
   "engines": {
-    "vscode": "^1.4.0"
+    "vscode": "^1.6.0"
   },
   "badges": [
     {
@@ -33,8 +33,8 @@
   ],
   "main": "./out/src/extension",
   "scripts": {
-    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "activationEvents": [
@@ -100,12 +100,13 @@
     }
   },
   "devDependencies": {
-    "typescript": "^1.6.2",
-    "vsce": "^1.8.1",
-    "vscode": "^0.11.17"
+    "@types/node": "^6.0.40",
+    "typescript": "^2.0.3",
+    "vsce": "^1.15.0",
+    "vscode": "^1.0.0"
   },
   "dependencies": {
-    "cross-spawn": "^4.0.0",
+    "cross-spawn": "^4.0.2",
     "glob": "^7.0.5",
     "iconv-lite": "^0.4.13"
   }
