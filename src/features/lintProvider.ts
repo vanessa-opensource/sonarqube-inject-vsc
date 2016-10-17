@@ -9,7 +9,6 @@ let glob = require('glob')
 
 export default class LintProvider {
 
-    private commandId: string;
     private diagnosticCollection: vscode.DiagnosticCollection;
     private statusBarItem: vscode.StatusBarItem;
     private diagnosticSeverityMap: Map<string, vscode.DiagnosticSeverity>;
@@ -28,7 +27,6 @@ export default class LintProvider {
             this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
         }
 
-        this.commandId = this.getCommandId();
         this.doLint();
     }
 
@@ -70,7 +68,7 @@ export default class LintProvider {
         let args = this.getSpawnArgs(textDocument);
 
         let result = "";
-        let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
+        let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', function (err) { throw err });
         sonarLintCS.stderr.on("data", function (buffer) {
             result += iconv.decode(buffer, consoleEncoding);
         });
@@ -126,7 +124,7 @@ export default class LintProvider {
         let args: Array<String> = this.getSpawnArgs();
         args.push('-u');
 
-        let sonarLintCS = spawn(this.commandId, args, this.getSpawnOptions()).on('error', function (err) { throw err });
+        let sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on('error', function (err) { throw err });
     }
 
     private getSpawnOptions(): Object {
@@ -177,7 +175,7 @@ export default class LintProvider {
         let command = "";
         let commandConfig = vscode.workspace.getConfiguration("sonarlint").get("sonarlintPath");
         if (!commandConfig || String(commandConfig).length === 0) {
-            command = "sonarlint";
+            command = path.resolve(__filename, "./../../../../tools/sonarlint-cli/bin/sonarlint");
         } else {
             command = String(commandConfig);
         }

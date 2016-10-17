@@ -10,10 +10,10 @@ Type: Boolean
 Default value: `true`.
 
 * `sonarlint.sonarlintPath`  
-Full path to sonarlint binary. Fill this only if sonarlint is not in your $PATH.  
+Full path to sonarlint binary. Fill this only if you use custom version of `sonarlint`.  
 Type: String  
 Format: relative (from workspace root) or absulute to `sonarlint` executable.  
-Default value: empty.
+Default value: `tools/sonarlint-cli/bin/sonarlint` (relative to the extension path).
 
 * `sonarlint.sourcePath`  
 GLOB pattern to identify source files.  
@@ -71,7 +71,7 @@ Don't forget to run `SonarLint: Update bindings to SonarQube server` command in 
 
 ## Limitations
 
-Currently works only with speacial manualy built `sonarlint` version. Source code can be found [here](https://github.com/nixel2007/sonarlint-cli/tree/feature/console-analysis).
+Currently works only with special `sonarlint-cli` version bundled with the extension. Source code can be found [here](https://github.com/nixel2007/sonarlint-cli/tree/feature/console-analysis).
 
 ## Supported languages
 
