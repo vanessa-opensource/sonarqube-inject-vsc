@@ -1,3 +1,5 @@
 out
 node_modules
 *.vsix
+tools/sonarlint-cli.zip
+tools/sonarlint-cli

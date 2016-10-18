@@ -9,3 +9,5 @@ tsconfig.json
 vsc-extension-quickstart.md
 screenshots/**
 *.vsix
+tools/sonarlint-cli.zip
+tools/sonarlint-cli/**
