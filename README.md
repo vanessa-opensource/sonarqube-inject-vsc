@@ -3,6 +3,10 @@
 SonarQube support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.  
 Non-official realization of SonarLint for VS Code.
 
+## Important
+
+When you install this extension archive with the utility `sonarlint` will be downloaded (~30MB).
+
 ## Extension settings
 
 * `sonarqube-inject.enableLinter`  
