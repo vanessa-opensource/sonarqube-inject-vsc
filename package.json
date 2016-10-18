@@ -5,10 +5,6 @@
   "icon": "images/SBIcon.png",
   "version": "1.0.0",
   "publisher": "silverbulleters",
-  "galleryBanner": {
-    "color": "#FFFFFF",
-    "theme": "dark"
-  },
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
     "url": "https://github.com/silverbulleters/sonarqube-inject-vsc/issues"
@@ -35,7 +31,7 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install && node out/src/utils/install_sonarlint.js"
+    "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "activationEvents": [
     "*"
