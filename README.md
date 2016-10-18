@@ -5,7 +5,7 @@ Non-official realization of SonarLint for VS Code.
 
 ## Important
 
-When you install this extension archive with the utility `sonarlint` will be downloaded (~30MB).
+`sonarlint` utility will be downloaded (~30MB) on first-time activation of the extension.
 
 ## Extension settings
 
