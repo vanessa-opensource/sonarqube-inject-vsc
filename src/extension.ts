@@ -18,7 +18,7 @@ let diagnosticCollection: vscode.DiagnosticCollection;
 export function activate(context: vscode.ExtensionContext) {
 
     if (!fs.existsSync(pathToDownload)) {
-        console.log("not found");
+        vscode.window.showInformationMessage("SonarLint utility wasn't found. Installation is started.");
         install(context);
         return;
     }
