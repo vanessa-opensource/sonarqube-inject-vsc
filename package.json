@@ -3,7 +3,7 @@
   "displayName": "SonarQube support for Visual Studio Code",
   "description": "SonarQube support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.",
   "icon": "images/SBIcon.png",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "silverbulleters",
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
@@ -41,6 +41,16 @@
       {
         "command": "sonarqube-inject.analyzeProject",
         "title": "Analyze current project",
+        "category": "SonarQube Inject"
+      },
+      {
+        "command": "sonarqube-inject.createGlobalJson",
+        "title": "Create global config with credentials to servers",
+        "category": "SonarQube Inject"
+      },
+      {
+        "command": "sonarqube-inject.createSonarlintJson",
+        "title": "Create local sonarlint config with project binding",
         "category": "SonarQube Inject"
       },
       {
@@ -102,6 +112,7 @@
     "vscode": "^1.0.0"
   },
   "dependencies": {
+    "async-file": "^2.0.2",
     "cross-spawn": "^4.0.2",
     "extract-zip": "^1.5.0",
     "follow-redirects": "^0.2.0",
