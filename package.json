@@ -44,6 +44,16 @@
         "category": "SonarQube Inject"
       },
       {
+        "command": "sonarqube-inject.createGlobalJson",
+        "title": "Create global config with credentials to servers",
+        "category": "SonarQube Inject"
+      },
+      {
+        "command": "sonarqube-inject.createSonarlintJson",
+        "title": "Create local sonarlint config with project binding",
+        "category": "SonarQube Inject"
+      },
+      {
         "command": "sonarqube-inject.updateBindings",
         "title": "Update bindings to SonarQube server",
         "category": "SonarQube Inject"
