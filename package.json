@@ -3,7 +3,7 @@
   "displayName": "SonarQube support for Visual Studio Code",
   "description": "SonarQube support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.",
   "icon": "images/SBIcon.png",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "silverbulleters",
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
