@@ -1,3 +1,9 @@
+## 1.1.1
+
+**Implemented enhancements:**
+
+  * Stability improvements - update critical dependencies
+
 ## 1.1.0
 
 **Implemented enhancements:**
