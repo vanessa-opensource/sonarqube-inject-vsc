@@ -1,3 +1,6 @@
+.idea/
+.sonarlint/
+.sonar/
 out
 node_modules
 *.vsix
