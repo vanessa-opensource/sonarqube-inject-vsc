@@ -3,6 +3,7 @@
 import * as fs from "async-file";
 import * as os from "os";
 import * as path from 'path';
+import * as url from "url";
 import * as vscode from "vscode";
 
 import { configTemplate } from "./templates/configTemplateInterface";
@@ -35,17 +36,29 @@ export async function activate(context: vscode.ExtensionContext) {
 
 function install(context: vscode.ExtensionContext) {
     const URL = "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.0/sonarlint-cli.zip";
+    let options = url.parse(URL);
 
-    return https.get(URL, (response) => {
-        response.pipe(fs.createWriteStream(pathToDownload)).on("finish", () => {
-            extract(pathToDownload, { dir: pathToExtract }, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                vscode.window.showInformationMessage("SonarLint was installed.");
-                addSubscriptions(context);
+    const configuration = vscode.workspace.getConfiguration();
+    const proxy = configuration.get("https.proxy");
+    if (proxy) {
+        options["proxy"] = proxy;
+    }
+
+    return https.get(options, (response) => {
+        response.pipe(fs.createWriteStream(pathToDownload))
+            .on("finish", () => {
+                extract(pathToDownload, { dir: pathToExtract }, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    vscode.window.showInformationMessage("SonarLint was installed.");
+                    addSubscriptions(context);
+                })
             })
-        });
+            .on("error", (err) => {
+                console.error(err);
+                vscode.window.showErrorMessage(err);
+            })
     });
 }
 

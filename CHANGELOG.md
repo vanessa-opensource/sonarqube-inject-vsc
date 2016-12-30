@@ -1,3 +1,10 @@
+## 1.1.2
+
+**Implemented enhancements:**
+
+  * Show error message on analyzis fail
+  * Stability improvements - update dependencies
+
 ## 1.1.1
 
 **Implemented enhancements:**

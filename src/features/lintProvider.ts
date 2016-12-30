@@ -70,13 +70,16 @@ export default class LintProvider {
         sonarLintCS.on("close", () => {
             try {
                 result = result.trim();
+                let errorMessage = "";
+                let errorMode = false;
                 let lines = result.split(/\r?\n/);
                 let regex = /^.*\{(.*)\}\s+\{(.*)\}\s+\{(\d+):(\d+)\s-\s(\d+):(\d+)\}\s+\{(.*)\}\s+\{(.*)\}/;
                 let vscodeDiagnosticArray: [vscode.Uri, vscode.Diagnostic[]][] = [];
                 let diagnosticFileMap = new Map<string, Array<string>>();
-                for (let line in lines) {
+                for (let lineIndex in lines) {
+                    let line = lines[lineIndex];
                     let match = undefined;
-                    match = lines[line].match(regex);
+                    match = line.match(regex);
                     if (match) {
                         let range = new vscode.Range(
                             new vscode.Position(+match[3] - 1, +match[4]),
@@ -86,6 +89,11 @@ export default class LintProvider {
                         vscodeDiagnostic.source = "sonarqube-inject";
                         let fileUri: vscode.Uri = vscode.Uri.file(match[1]);
                         vscodeDiagnosticArray.push([fileUri, [vscodeDiagnostic]]);
+                    } else if (line.match(/.*EXECUTION FAILURE.*/)) {
+                        errorMode = true;
+                    }
+                    if (errorMode) {
+                        errorMessage += line + "\n";
                     }
                 }
                 if (textDocument) {
@@ -104,6 +112,10 @@ export default class LintProvider {
                     this.statusBarItem.show();
                 } else {
                     this.statusBarItem.hide();
+                }
+                if (errorMessage) {
+                    console.log(errorMessage);
+                    vscode.window.showErrorMessage(errorMessage);
                 }
             } catch (err) {
                 console.log(err);
