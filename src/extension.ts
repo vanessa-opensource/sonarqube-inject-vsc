@@ -102,7 +102,7 @@ async function createGlobalJson() {
 
     const filename = "global.json";
 
-    createConfigFile(rootPath, filename, new GlobalTemplate());
+    createConfigFile(confPath, filename, new GlobalTemplate());
 
 }
 
