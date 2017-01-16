@@ -35,7 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 function install(context: vscode.ExtensionContext) {
-    const URL = "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.0/sonarlint-cli.zip";
+    const URL = "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.1/sonarlint-cli.zip";
     let options = url.parse(URL);
 
     const configuration = vscode.workspace.getConfiguration();
