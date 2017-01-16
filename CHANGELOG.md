@@ -1,3 +1,13 @@
+## 1.1.3
+
+**Bug fixes:**
+
+  * Fix the global.json destination
+
+**Implemented enhancements:**
+
+  * Update sonarlint-cli version
+
 ## 1.1.2
 
 **Implemented enhancements:**
