@@ -114,8 +114,8 @@
     "async-file": "^2.0.2",
     "cross-spawn": "^5.0.1",
     "extract-zip": "^1.6.0",
-    "follow-redirects": "^1.2.1",
     "glob": "^7.1.1",
-    "iconv-lite": "^0.4.15"
+    "iconv-lite": "^0.4.15",
+    "request": "^2.79.0"
   }
 }

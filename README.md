@@ -9,7 +9,8 @@ Non-official realization of SonarLint for VS Code.
 
 ## Important
 
-`sonarlint` utility will be downloaded (~30MB) on first-time activation of the extension.
+`sonarlint` utility will be downloaded (~30MB) on first-time activation of the extension.  
+If you are working behind a proxy, consider set `http_proxy` and `http.proxyStrictSSL` in your Visual Studio Code settings.
 
 ## TLDR: Quick Setup for Connected mode
 
