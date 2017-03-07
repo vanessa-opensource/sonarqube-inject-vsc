@@ -1,3 +1,13 @@
+## 1.1.4
+
+**Bug fixes:**
+
+  * Fix sonarlint-cli downloading behind proxy
+
+**Implemented enhancements:**
+
+  * Stability improvements - update dependencies
+
 ## 1.1.3
 
 **Bug fixes:**
