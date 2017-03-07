@@ -1,11 +1,11 @@
-import { configTemplate } from "./configTemplateInterface";
+import { IConfigTemplate } from "./IConfigTemplate";
 
-export default class SonarlintTemplate implements configTemplate {
+export default class SonarlintTemplate implements IConfigTemplate {
 
-    public getTemplateObject(): Object {
+    public getTemplateObject(): object {
         return {
-            "serverId": "my-company-server",
-            "projectKey": "my-project"
+            serverId: "my-company-server",
+            projectKey: "my-project",
         };
     }
 }

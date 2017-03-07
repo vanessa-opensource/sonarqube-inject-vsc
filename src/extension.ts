@@ -1,27 +1,23 @@
-// The module 'vscode' contains the VS Code extensibility API
+// The module "vscode" contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as fs from "async-file";
+import * as extract from "extract-zip";
 import * as os from "os";
-import * as path from 'path';
+import * as path from "path";
+import * as request from "request";
 import * as vscode from "vscode";
 
-import { configTemplate } from "./templates/configTemplateInterface";
-import GlobalTemplate from "./templates/globalTemplate";
-import SonarlintTemplate from "./templates/sonarlintTemplate";
 import LintProvider from "./features/lintProvider";
-
-const request = require('request');
-const extract = require('extract-zip');
+import GlobalTemplate from "./templates/globalTemplate";
+import { IConfigTemplate } from "./templates/IConfigTemplate";
+import SonarlintTemplate from "./templates/sonarlintTemplate";
 
 const pathToExtract = path.join(__filename, "./../../../tools");
 const pathToDownload = path.join(pathToExtract, "sonarlint-cli.zip");
 
-let diagnosticCollection: vscode.DiagnosticCollection;
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
-
     const sonarLintExists = await fs.exists(pathToDownload);
     if (!sonarLintExists) {
         vscode.window.showInformationMessage("SonarLint utility wasn't found. Installation is started.");
@@ -30,25 +26,25 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     addSubscriptions(context);
-
 }
 
 function install(context: vscode.ExtensionContext) {
-    const sonarlintCLILocation = "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.1/sonarlint-cli.zip";
+    const sonarlintCLILocation =
+        "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.1/sonarlint-cli.zip";
 
-    let options = {
-        url: sonarlintCLILocation
+    const options: request.CoreOptions & request.UrlOptions = {
+        url: sonarlintCLILocation,
     };
 
     const configuration = vscode.workspace.getConfiguration();
     const proxy = configuration.get("http.proxy") || configuration.get("https.proxy");
     if (proxy) {
-        options["proxy"] = proxy;
+        options.proxy = proxy;
     }
 
     const proxyStrictSSL = configuration.get("http.proxyStrictSSL");
-    if (typeof proxyStrictSSL != 'undefined') {
-        options["strictSSL"] = proxyStrictSSL;
+    if (typeof proxyStrictSSL !== "undefined") {
+        options.strictSSL = Boolean(proxyStrictSSL);
     }
 
     return request(options)
@@ -60,7 +56,7 @@ function install(context: vscode.ExtensionContext) {
                 }
                 vscode.window.showInformationMessage("SonarLint was installed.");
                 addSubscriptions(context);
-            })
+            });
         })
         .on("error", (err) => {
             console.error(err);
@@ -69,7 +65,7 @@ function install(context: vscode.ExtensionContext) {
 }
 
 function addSubscriptions(context: vscode.ExtensionContext) {
-    let linter = new LintProvider();
+    const linter = new LintProvider();
     linter.activate(context.subscriptions);
 
     context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.analyzeProject", () => {
@@ -81,17 +77,20 @@ function addSubscriptions(context: vscode.ExtensionContext) {
         linter.doLint();
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.createGlobalJson", createGlobalJson));
+    context.subscriptions.push(
+        vscode.commands.registerCommand("sonarqube-inject.createGlobalJson", createGlobalJson),
+    );
 
-    context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.createSonarlintJson", createSonarlintJson));
-
+    context.subscriptions.push(
+        vscode.commands.registerCommand("sonarqube-inject.createSonarlintJson", createSonarlintJson),
+    );
 }
 
 async function createGlobalJson() {
     const rootPath = path.join(os.homedir(), ".sonarlint");
 
     if (!rootPath) {
-        vscode.window.showInformationMessage("SonarLint binary is not installed.")
+        vscode.window.showInformationMessage("SonarLint binary is not installed.");
         return;
     }
 
@@ -109,7 +108,6 @@ async function createGlobalJson() {
     const filename = "global.json";
 
     createConfigFile(confPath, filename, new GlobalTemplate());
-
 }
 
 async function createSonarlintJson() {
@@ -119,7 +117,7 @@ async function createSonarlintJson() {
     createConfigFile(rootPath, filename, new SonarlintTemplate());
 }
 
-async function createConfigFile(rootPath: string, filename: string, template: configTemplate) {
+async function createConfigFile(rootPath: string, filename: string, template: IConfigTemplate) {
     if (!rootPath) {
         return;
     }

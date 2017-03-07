@@ -1,0 +1,9 @@
+{
+    "extends": "tslint:latest",
+    "rules": {
+        "no-console": [
+            "log"
+        ],
+        "object-literal-sort-keys": false
+    }
+}

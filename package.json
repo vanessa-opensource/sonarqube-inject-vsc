@@ -106,16 +106,19 @@
     }
   },
   "devDependencies": {
-    "@types/node": "^7.0.0",
-    "typescript": "^2.1.5",
-    "vscode": "^1.0.3"
+    "@types/extract-zip": "^1.6.0",
+    "@types/iconv-lite": "0.0.1",
+    "@types/node": "^7.0.5",
+    "@types/request": "0.0.41",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.1",
+    "vscode": "^1.0.5"
   },
   "dependencies": {
     "async-file": "^2.0.2",
-    "cross-spawn": "^5.0.1",
+    "cross-spawn": "^5.1.0",
     "extract-zip": "^1.6.0",
-    "glob": "^7.1.1",
     "iconv-lite": "^0.4.15",
-    "request": "^2.79.0"
+    "request": "^2.80.0"
   }
 }
