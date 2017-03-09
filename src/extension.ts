@@ -56,7 +56,7 @@ function install(context: vscode.ExtensionContext) {
                     vscode.window.showErrorMessage(err.message);
                     return;
                 }
-                await makeSonarLintExecutable(path.join(pathToExtract, "sonarlint-cli"));
+                await fs.chmod(path.join(pathToExtract, "sonarlint-cli", "bin", "sonarlint"), "755");
                 vscode.window.showInformationMessage("SonarLint was installed.");
                 addSubscriptions(context);
             });
@@ -65,11 +65,6 @@ function install(context: vscode.ExtensionContext) {
             console.error(err);
             vscode.window.showErrorMessage(err);
         });
-}
-
-async function makeSonarLintExecutable(pathToSonarLint: string) {
-    await fs.chmod(path.join(pathToSonarLint, "bin", "sonarlint"), "755");
-    await fs.chmod(path.join(pathToSonarLint, "bin", "sonarlint.bat"), "755");
 }
 
 function addSubscriptions(context: vscode.ExtensionContext) {
