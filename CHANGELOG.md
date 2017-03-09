@@ -1,3 +1,9 @@
+## 1.1.5
+
+**Bug fixes:**
+
+  * Make sonarlint-cli posible to install on linux
+
 ## 1.1.4
 
 **Bug fixes:**
