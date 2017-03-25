@@ -207,7 +207,7 @@ export default class LintProvider {
         const configuration = vscode.workspace.getConfiguration("sonarqube-inject");
         let consoleEncoding: string;
         let consoleEncodingDefaultValue: string;
-        if (this.isWindows) {
+        if (this.isWindows()) {
             consoleEncoding = String(configuration.get("windowsConsoleEncoding"));
             consoleEncodingDefaultValue = "windows-1251";
         } else {
