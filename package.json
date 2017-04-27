@@ -44,6 +44,11 @@
         "category": "SonarQube Inject"
       },
       {
+        "command": "sonarqube-inject.analyzeCurrentFile",
+        "title": "Analyze current file",
+        "category": "SonarQube Inject"
+      },
+      {
         "command": "sonarqube-inject.createGlobalJson",
         "title": "Create global config with credentials to servers",
         "category": "SonarQube Inject"

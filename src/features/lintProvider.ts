@@ -20,12 +20,16 @@ export default class LintProvider {
         this.diagnosticSeverityMap.set("BLOCKER", vscode.DiagnosticSeverity.Error);
 
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection();
-        vscode.workspace.onDidSaveTextDocument(this.doLint, this);
         if (!this.statusBarItem) {
             this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
         }
 
-        this.doLint();
+        vscode.workspace.onDidOpenTextDocument(this.doLint, this);
+        vscode.workspace.onDidSaveTextDocument(this.doLint, this);
+
+        if (vscode.window.activeTextEditor) {
+            this.doLint(vscode.window.activeTextEditor.document);
+        }
     }
 
     public dispose(): void {
@@ -44,6 +48,11 @@ export default class LintProvider {
             const filename = textDocument.uri.fsPath;
             const arrFilename = filename.split(".");
             if (arrFilename.length === 0) {
+                return;
+            }
+            // Strange behavior of VSCode.
+            // Analyzis runs 2 times - for "file" scheme and for "git" scheme
+            if (textDocument.uri.scheme === "git") {
                 return;
             }
         } else {
