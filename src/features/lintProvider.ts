@@ -20,12 +20,16 @@ export default class LintProvider {
         this.diagnosticSeverityMap.set("BLOCKER", vscode.DiagnosticSeverity.Error);
 
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection();
-        vscode.workspace.onDidSaveTextDocument(this.doLint, this);
         if (!this.statusBarItem) {
             this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
         }
 
-        this.doLint();
+        vscode.workspace.onDidOpenTextDocument(this.doLint, this);
+        vscode.workspace.onDidSaveTextDocument(this.doLint, this);
+
+        if (vscode.window.activeTextEditor) {
+            this.doLint(vscode.window.activeTextEditor.document);
+        }
     }
 
     public dispose(): void {
@@ -44,6 +48,11 @@ export default class LintProvider {
             const filename = textDocument.uri.fsPath;
             const arrFilename = filename.split(".");
             if (arrFilename.length === 0) {
+                return;
+            }
+            // Strange behavior of VSCode.
+            // Analyzis runs 2 times - for "file" scheme and for "git" scheme
+            if (textDocument.uri.scheme === "git") {
                 return;
             }
         } else {
@@ -71,15 +80,22 @@ export default class LintProvider {
                 let errorMessage = "";
                 let errorMode = false;
                 const lines = result.split(/\r?\n/);
-                const regex = /^.*\{(.*)\}\s+\{(.*)\}\s+\{(\d+):(\d+)\s-\s(\d+):(\d+)\}\s+\{(.*)\}\s+\{(.*)\}/;
+                const regex = /^[^}]*\{([^}]*)\}\s+\{([^}]*)\}\s+\{(\d+|null):(\d+|null)\s-\s(\d+|null):(\d+|null)\}\s+\{([^}]*)\}\s+\{([^}]*)\}/;
                 const vscodeDiagnosticArray: Array<[vscode.Uri, vscode.Diagnostic[]]> = [];
                 const diagnosticFileMap = new Map<string, string[]>();
                 for (const line of lines) {
                     const match = line.match(regex);
                     if (match) {
+                        const startLine = match[3] === "null" ? 0 : +match[3] - 1;
+                        const startCharacter = match[4] === "null" ? 0 : +match[4];
+                        const endLine = match[5] === "null" ? 0 : +match[5] - 1;
+                        const endCharacter = match[6] === "null" ? 0 : +match[6];
+
                         const range = new vscode.Range(
-                            new vscode.Position(+match[3] - 1, +match[4]),
-                            new vscode.Position(+match[5] - 1, +match[6]) // tslint:disable-line:trailing-comma
+                            startLine,
+                            startCharacter,
+                            endLine,
+                            endCharacter // tslint:disable-line:trailing-comma
                         );
                         const vscodeDiagnostic =
                             new vscode.Diagnostic(range, match[8], this.diagnosticSeverityMap.get(match[2]));
@@ -207,7 +223,7 @@ export default class LintProvider {
         const configuration = vscode.workspace.getConfiguration("sonarqube-inject");
         let consoleEncoding: string;
         let consoleEncodingDefaultValue: string;
-        if (this.isWindows) {
+        if (this.isWindows()) {
             consoleEncoding = String(configuration.get("windowsConsoleEncoding"));
             consoleEncodingDefaultValue = "windows-1251";
         } else {

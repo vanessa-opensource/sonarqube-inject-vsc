@@ -75,9 +75,13 @@ function addSubscriptions(context: vscode.ExtensionContext) {
         linter.doLint();
     }));
 
+    context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.analyzeCurrentFile", () => {
+        linter.doLint(vscode.window.activeTextEditor.document);
+    }));
+
     context.subscriptions.push(vscode.commands.registerCommand("sonarqube-inject.updateBindings", () => {
         linter.updateBindings();
-        linter.doLint();
+        linter.doLint(vscode.window.activeTextEditor.document);
     }));
 
     context.subscriptions.push(

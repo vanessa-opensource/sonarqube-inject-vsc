@@ -1,3 +1,17 @@
+## 1.2.0
+
+**Bug fixes:**
+
+* Fixed parse of sonarlint-cli output with whole-file issues 
+
+**Implemented enhancements:**
+
+  * Analyze only current file by default
+    * You stil can run a full analyzis via `Analyze current project` command
+  * Analyze file upon opening
+  * Additional command `Analyze current file` added
+  * Stability improvements - update dependencies
+
 ## 1.1.5
 
 **Bug fixes:**
