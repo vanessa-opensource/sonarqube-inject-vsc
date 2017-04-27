@@ -75,6 +75,9 @@ If you need to specify multiply paths in GLOB patterns, you can use `{path1,path
 * `SonarQube Inject: Analyze current project`  
 Runs full analysis on current project
 
+* `SonarQube Inject: Analyze current file`  
+Runs analysis on current file
+
 * `SonarQube Inject: Create global config with credentials to servers`  
 Creates and opens a global config file to set server and credentials info
 
