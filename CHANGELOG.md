@@ -1,3 +1,9 @@
+## 1.2.1
+
+**Bug fixes:**
+
+* Fixes to make `sonar-bsl-plugin` work again
+
 ## 1.2.0
 
 **Bug fixes:**
