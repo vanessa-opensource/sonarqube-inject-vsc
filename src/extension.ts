@@ -30,7 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 function install(context: vscode.ExtensionContext) {
     const sonarlintCLILocation =
-        "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.1/sonarlint-cli.zip";
+        "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.2/sonarlint-cli.zip";
 
     const options: request.CoreOptions & request.UrlOptions = {
         url: sonarlintCLILocation,
