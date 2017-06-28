@@ -12,6 +12,12 @@ Non-official realization of SonarLint for VS Code.
 `sonarlint` utility will be downloaded (~30MB) on first-time activation of the extension.  
 If you are working behind a proxy, consider set `http_proxy` or `https_proxy` env variables and/or `http.proxy` and `http.proxyStrictSSL` settings in your Visual Studio Code.
 
+## TLDR: Quick Setup for Standalone mode
+
+* Just open your project dir
+* Don't create a project config
+* Supported languages: JS, PHP, Python and Java
+
 ## TLDR: Quick Setup for Connected mode
 
 * Create global config via `SonarQube Inject: Create global config with credentials to servers` and fill the values
