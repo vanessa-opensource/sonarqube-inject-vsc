@@ -1,3 +1,10 @@
+## 1.2.2
+
+**Implemented enhancements:**
+
+* Support rules with multiline descriptions
+* Stability improvements - update dependencies
+
 ## 1.2.1
 
 **Bug fixes:**

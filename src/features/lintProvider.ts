@@ -78,41 +78,50 @@ export default class LintProvider {
             try {
                 result = result.trim();
                 let errorMessage = "";
-                let errorMode = false;
-                const lines = result.split(/\r?\n/);
-                const regex = /^[^}]*\{([^}]*)\}\s+\{([^}]*)\}\s+\{(\d+|null):(\d+|null)\s-\s(\d+|null):(\d+|null)\}\s+\{([^}]*)\}\s+\{([^}]*)\}/;
-                const vscodeDiagnosticArray: Array<[vscode.Uri, vscode.Diagnostic[]]> = [];
-                const diagnosticFileMap = new Map<string, string[]>();
-                for (const line of lines) {
-                    const match = line.match(regex);
-                    if (match) {
-                        const startLine = match[3] === "null" ? 0 : +match[3] - 1;
-                        const startCharacter = match[4] === "null" ? 0 : +match[4];
-                        const endLine = match[5] === "null" ? 0 : +match[5] - 1;
-                        const endCharacter = match[6] === "null" ? 0 : +match[6];
 
-                        const range = new vscode.Range(
-                            startLine,
-                            startCharacter,
-                            endLine,
-                            endCharacter // tslint:disable-line:trailing-comma
-                        );
-                        const vscodeDiagnostic =
-                            new vscode.Diagnostic(range, match[8], this.diagnosticSeverityMap.get(match[2]));
-                        vscodeDiagnostic.source = "sonarqube-inject";
-                        const fileUri: vscode.Uri = vscode.Uri.file(match[1]);
-                        vscodeDiagnosticArray.push([fileUri, [vscodeDiagnostic]]);
-                    } else if (line.match(/.*EXECUTION FAILURE.*/)) {
-                        errorMode = true;
+                const errRegex = /.*EXECUTION FAILURE[\s|\S]*/gm;
+                const errMatcher = new RegExp(errRegex);
+                const errMatch = errMatcher.exec(result);
+                if (errMatch) {
+                    errorMessage = errMatch[0];
+                    console.log(errorMessage);
+                    vscode.window.showErrorMessage(errorMessage);
+
+                    return;
+                }
+
+                // tslint:disable-next-line:max-line-length
+                const regex = /^[^}]*\{([^}]*)\}\s+\{([^}]*)\}\s+\{(\d+|null):(\d+|null)\s-\s(\d+|null):(\d+|null)\}\s+\{([^}]*)\}\s+\{([^}]*)\}/gm;
+                const matcher = new RegExp(regex);
+                const vscodeDiagnosticArray: Array<[vscode.Uri, vscode.Diagnostic[]]> = [];
+                while (true) {
+                    const matches = matcher.exec(result);
+                    if (matches == null) {
+                        break;
                     }
-                    if (errorMode) {
-                        errorMessage += line + "\n";
-                    }
+                    const match = matches;
+
+                    const startLine = match[3] === "null" ? 0 : +match[3] - 1;
+                    const startCharacter = match[4] === "null" ? 0 : +match[4];
+                    const endLine = match[5] === "null" ? 0 : +match[5] - 1;
+                    const endCharacter = match[6] === "null" ? 0 : +match[6];
+
+                    const range = new vscode.Range(
+                        startLine,
+                        startCharacter,
+                        endLine,
+                        endCharacter // tslint:disable-line:trailing-comma
+                    );
+                    const vscodeDiagnostic =
+                        new vscode.Diagnostic(range, match[8], this.diagnosticSeverityMap.get(match[2]));
+                    vscodeDiagnostic.source = "sonarqube-inject";
+                    const fileUri: vscode.Uri = vscode.Uri.file(match[1]);
+                    vscodeDiagnosticArray.push([fileUri, [vscodeDiagnostic]]);
                 }
                 if (textDocument) {
                     const tempDiagnosticArray: vscode.Diagnostic[] = new Array<vscode.Diagnostic>();
-                    vscodeDiagnosticArray.forEach( (element) => {
-                        element[1].forEach( (diagnostic) => {
+                    vscodeDiagnosticArray.forEach((element) => {
+                        element[1].forEach((diagnostic) => {
                             tempDiagnosticArray.push(diagnostic);
                         });
                     });
@@ -129,17 +138,13 @@ export default class LintProvider {
                 } else {
                     this.statusBarItem.hide();
                 }
-                if (errorMessage) {
-                    console.log(errorMessage);
-                    vscode.window.showErrorMessage(errorMessage);
-                }
             } catch (err) {
                 console.log(err);
                 vscode.window.showErrorMessage(String(err));
             }
         });
 
-    };
+    }
 
     public updateBindings() {
         const args: string[] = this.getSpawnArgs();
@@ -217,7 +222,7 @@ export default class LintProvider {
             command = String(commandConfig);
         }
         return command;
-    };
+    }
 
     private getConsoleEncoding(): string {
         const configuration = vscode.workspace.getConfiguration("sonarqube-inject");
