@@ -1,3 +1,9 @@
+## 1.3.0
+
+**Implemented enhancements:**
+
+* sonarlint-cli is bundled with extension - no more `Downloading...` after update
+
 ## 1.2.2
 
 **Implemented enhancements:**
