@@ -13,10 +13,10 @@ before_install:
 install:
   - npm install
   - npm run vscode:prepublish
-  - npm install --global vsce
+  - npm install --no-save vsce
 
 before_deploy:
-  - vsce package
+  - ./node_modules/.bin/vsce package
 
 deploy:
   provider: releases
