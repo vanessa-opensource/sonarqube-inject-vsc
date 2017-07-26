@@ -15,11 +15,15 @@ install:
   - npm run vscode:prepublish
   - npm install --global vsce
 
+before_deploy:
+  - vsce package
+
 deploy:
   provider: releases
   api_key:
     secure: 6y7J+ttRhnI2DDUYsUoSb3iXxHGJ1Vx8Sckl1M0/NyY6yKw/hWmhgR2w6+WT9NtnqRMMeRMBnsHEveEYyt3NWvDd+JLOEm1QgYbgdGn/Jzwr01sM2RMg7mLsmkea9R6+pxKqtHtDsD/FeyfAS258DMVW8DzTUg38ueFA6CYNCJ5nkpfLCfRbe2iYOjMMceTZKtVx628+CBU2q9UgempYaIxp4Hb+oQ+gIn9YDb4Ifc0lqzrQrz/7Oo5wSMCbQdNIRNlC1nwczl8nEdifkfV+h7zAvJOCm8PshZjcYkwlKT/fN35viB3lPTe7A6xlXp3j3kqMx1rcIEl4CB2JOuPoFuuwzkNsObLGpzxWk+sypY9TAHYe37sa5O4OpfbRYYoNIf/BOZQsmTiiYeO7jbeB/TpCafbXbexQ/6ktfMUXvOufkZQjSv1fKbWlcLIminBT3pLX3M++582RYYe96WIV9zMhstHOsQvfWpnr23KHRWca7g4PuHSkq41bSPZfPK3ZP5aN9POewMZ/sAcBwAGmnJfmJzG1dlqLrGStlOUcWV6b5ac2kS4ZT0xdTIReQizJYHjLsoi9NPn3Kkuspx9nH5/MB+kU+7jKbEZkBVsINr4EnTzRWaNOTr86prxYETWzBJQWV2Cg4EAjAcZBn6JwMb2wBFDl7bHpVJ6T5CHAlOo=
-  file: sonarqube-inject-vsc-*.vsix
+  file_glob: true
+  file: sonarqube-inject-*.vsix
   skip_cleanup: true
   on:
     repo: silverbulleters/sonarqube-inject-vsc
