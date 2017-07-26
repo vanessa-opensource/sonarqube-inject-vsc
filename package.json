@@ -111,13 +111,14 @@
     }
   },
   "devDependencies": {
-    "@types/fs-extra": "^4.0.0",
     "@types/extract-zip": "^1.6.2",
+    "@types/fs-extra": "^4.0.0",
     "@types/iconv-lite": "^0.0.1",
     "@types/node": "^8.0.14",
     "@types/request": "^2.0.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.2",
+    "vsce": "^1.29.0",
     "vscode": "^1.1.4"
   },
   "dependencies": {
