@@ -15,6 +15,9 @@ install:
   - npm run vscode:prepublish
   - npm install --global vsce
 
+before_deploy:
+  - vsce package
+
 deploy:
   provider: releases
   api_key:
