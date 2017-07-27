@@ -1,3 +1,9 @@
+## 1.3.1
+
+**Bug fixes:**
+
+* Make sonarlint-cli posible to run on linux (again)
+
 ## 1.3.0
 
 **Implemented enhancements:**
