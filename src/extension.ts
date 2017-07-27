@@ -50,8 +50,19 @@ async function createGlobalJson() {
     const rootPath = path.join(os.homedir(), ".sonarlint");
 
     if (!rootPath) {
-        vscode.window.showInformationMessage("SonarLint binary is not installed.");
+        console.error("Can't determitate homedir");
+        vscode.window.showErrorMessage("Can't determitate homedir.");
         return;
+    }
+
+    try {
+        await fs.stat(rootPath);
+    } catch (error) {
+        try {
+            await fs.mkdir(rootPath);
+        } catch (error) {
+            vscode.window.showErrorMessage(error);
+        }
     }
 
     const confPath = path.join(rootPath, "conf");
