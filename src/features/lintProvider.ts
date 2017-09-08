@@ -165,7 +165,7 @@ export default class LintProvider {
         });
         sonarLintCS.on("close", () => {
             console.log(result);
-            vscode.window.showInformationMessage("Bindings updated successefully.");
+            vscode.window.showInformationMessage("Bindings updated successfully.");
         });
     }
 
