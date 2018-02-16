@@ -65,8 +65,7 @@ export default class LintProvider {
         } else {
             const allWorkspaceFolders = this.getAllWorkspaceFolders();
             if (allWorkspaceFolders) {
-                for (let i = 0; i < allWorkspaceFolders.length; i++) {
-                    const folder = allWorkspaceFolders[i];
+                for (const folder of allWorkspaceFolders) {
                     this.executeLint(null, this.getSpawnOptionsWithPath(folder.uri.fsPath));
                 }
             }
@@ -74,12 +73,29 @@ export default class LintProvider {
 
     }
 
+    public updateBindings() {
+        const args: string[] = this.getSpawnArgs();
+        args.push("-u");
+
+        const workSpaceFolders = this.getAllWorkspaceFolders();
+        if (workSpaceFolders && workSpaceFolders.length > 0) {
+            for (const folder of workSpaceFolders) {
+                const spawnOptions = this.getSpawnOptionsWithPath(folder.uri.fsPath);
+                this.updateBinding(args, spawnOptions);
+            }
+        }
+    }
+
     private executeLint(textDocument?: vscode.TextDocument, spawnOptions?: object) {
         const consoleEncoding = this.getConsoleEncoding();
 
         let result = "";
 
-        const sonarLintCS = spawn(this.getCommandId(), this.getSpawnArgs(textDocument), spawnOptions).on("error", (err) => {
+        const sonarLintCS = spawn(
+            this.getCommandId(),
+            this.getSpawnArgs(textDocument),
+            spawnOptions,
+        ).on("error", (err) => {
             console.log(err);
             vscode.window.showErrorMessage(String(err));
         });
@@ -164,20 +180,6 @@ export default class LintProvider {
         return vscode.workspace.workspaceFolders;
     }
 
-    public updateBindings() {
-        const args: string[] = this.getSpawnArgs();
-        args.push("-u");
-
-        const workSpaceFolders = this.getAllWorkspaceFolders();
-        if (workSpaceFolders && workSpaceFolders.length > 0) {
-            for (let i = 0; i < workSpaceFolders.length; i++) {
-                const folder = workSpaceFolders[i];
-                const spawnOptions = this.getSpawnOptionsWithPath(folder.uri.fsPath);
-                this.updateBinding(args, spawnOptions);
-            }
-        }
-    }
-
     private updateBinding(args?: string[], spawnOptions?: object) {
         const consoleEncoding = this.getConsoleEncoding();
         let result = "";
@@ -205,9 +207,9 @@ export default class LintProvider {
         return options;
     }
 
-    private getSpawnOptionsWithPath(path?: string): object {
+    private getSpawnOptionsWithPath(pathString?: string): object {
         const options = {
-            cwd: path,
+            cwd: pathString,
             env: process.env,
         };
         return options;
