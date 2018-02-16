@@ -114,10 +114,10 @@
     "@types/fs-extra": "^5.0.0",
     "@types/extract-zip": "^1.6.2",
     "@types/iconv-lite": "^0.0.1",
-    "@types/node": "^8.0.14",
-    "@types/request": "^2.0.0",
+    "@types/node": "^9.4.6",
+    "@types/request": "^2.47.0",
     "tslint": "^5.9.1",
-    "typescript": "^2.6.2",
+    "typescript": "^2.7.2",
     "vscode": "^1.1.10"
   },
   "dependencies": {
