@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "servers": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "Unique ID of SonarQube connection"
+                            },
+                            "url": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "SonarQube Server URL"
+                            },
+                            "token": {
+                                "type": "string",
+                                "description": "Auth token. Can be generated at http://your-server.com/account/security"
+                            },
+                            "organizationKey": {
+                                "type": "string",
+                                "description": "Key of organization, if Organization mode is enabled on your SonarQube server"
+                            },
+                            "login": {
+                                "type": "string",
+                                "description": "Login"
+                            },
+                            "password": {
+                                "type": "string",
+                                "description": "Password"
+                            }
+                        },
+                        "oneOf": [
+                            {
+                                "required": [
+                                    "id",
+                                    "url",
+                                    "token"
+                                ]
+                            },
+                            {
+                                "required": [
+                                    "id",
+                                    "url",
+                                    "login",
+                                    "password"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "required": [
+        "servers"
+    ]
+}

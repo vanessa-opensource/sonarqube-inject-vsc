@@ -40,6 +40,7 @@ export default class LintProvider {
 
     public doLint(textDocument?: vscode.TextDocument) {
         const configuration = vscode.workspace.getConfiguration("sonarqube-inject");
+
         const linterEnabled = Boolean(configuration.get("enableLinter"));
         if (!linterEnabled) {
             return;
@@ -59,12 +60,42 @@ export default class LintProvider {
             this.diagnosticCollection.clear();
         }
 
+        if (textDocument) {
+            this.executeLint(textDocument, this.getSpawnOptions(textDocument));
+        } else {
+            const allWorkspaceFolders = this.getAllWorkspaceFolders();
+            if (allWorkspaceFolders) {
+                for (const folder of allWorkspaceFolders) {
+                    this.executeLint(null, this.getSpawnOptionsWithPath(folder.uri.fsPath));
+                }
+            }
+        }
+
+    }
+
+    public updateBindings() {
+        const args: string[] = this.getSpawnArgs();
+        args.push("-u");
+
+        const workSpaceFolders = this.getAllWorkspaceFolders();
+        if (workSpaceFolders && workSpaceFolders.length > 0) {
+            for (const folder of workSpaceFolders) {
+                const spawnOptions = this.getSpawnOptionsWithPath(folder.uri.fsPath);
+                this.updateBinding(args, spawnOptions);
+            }
+        }
+    }
+
+    private executeLint(textDocument?: vscode.TextDocument, spawnOptions?: object) {
         const consoleEncoding = this.getConsoleEncoding();
 
-        const args = this.getSpawnArgs(textDocument);
-
         let result = "";
-        const sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on("error", (err) => {
+
+        const sonarLintCS = spawn(
+            this.getCommandId(),
+            this.getSpawnArgs(textDocument),
+            spawnOptions,
+        ).on("error", (err) => {
             console.log(err);
             vscode.window.showErrorMessage(String(err));
         });
@@ -129,7 +160,7 @@ export default class LintProvider {
                 } else {
                     this.diagnosticCollection.set(vscodeDiagnosticArray);
                 }
-                if (vscodeDiagnosticArray.length !== 0 && !vscode.workspace.rootPath) {
+                if (vscodeDiagnosticArray.length !== 0 && !this.getRootPath(textDocument)) {
                     this.statusBarItem.text =
                         vscodeDiagnosticArray.length === 0
                             ? "$(check) No Error"
@@ -143,17 +174,16 @@ export default class LintProvider {
                 vscode.window.showErrorMessage(String(err));
             }
         });
-
     }
 
-    public updateBindings() {
-        const args: string[] = this.getSpawnArgs();
-        args.push("-u");
+    private getAllWorkspaceFolders(): vscode.WorkspaceFolder[] {
+        return vscode.workspace.workspaceFolders;
+    }
 
+    private updateBinding(args?: string[], spawnOptions?: object) {
         const consoleEncoding = this.getConsoleEncoding();
         let result = "";
-
-        const sonarLintCS = spawn(this.getCommandId(), args, this.getSpawnOptions()).on("error", (err) => {
+        const sonarLintCS = spawn(this.getCommandId(), args, spawnOptions).on("error", (err) => {
             console.log(err);
             vscode.window.showErrorMessage(String(err));
         });
@@ -165,20 +195,43 @@ export default class LintProvider {
         });
         sonarLintCS.on("close", () => {
             console.log(result);
-            vscode.window.showInformationMessage("Bindings updated successefully.");
+            vscode.window.showInformationMessage("Bindings updated successfully.");
         });
     }
 
-    private getSpawnOptions(): object {
+    private getSpawnOptions(textDocument?: vscode.TextDocument): object {
         const options = {
-            cwd: vscode.workspace.rootPath,
+            cwd: this.getRootPath(textDocument),
             env: process.env,
         };
         return options;
     }
 
-    private getSpawnArgs(textDocument?: vscode.TextDocument): string[] {
+    private getSpawnOptionsWithPath(pathString?: string): object {
+        const options = {
+            cwd: pathString,
+            env: process.env,
+        };
+        return options;
+    }
 
+    private getRelativePath(textDocument?: vscode.TextDocument): string {
+        let sourcePath = path.relative(this.getRootPath(textDocument), textDocument.uri.fsPath);
+        sourcePath = sourcePath.replace(/\\/g, "/");
+        return sourcePath;
+    }
+
+    private getRootPath(textDocument?: vscode.TextDocument): string {
+        let rootPath;
+        if (textDocument) {
+            const activeWorkspacefolder = vscode.workspace.getWorkspaceFolder(textDocument.uri);
+            rootPath = activeWorkspacefolder && activeWorkspacefolder.uri.fsPath;
+        }
+
+        return rootPath;
+    }
+
+    private getSpawnArgs(textDocument?: vscode.TextDocument): string[] {
         const configuration = vscode.workspace.getConfiguration("sonarqube-inject");
 
         let sourcePath = String(configuration.get("sourcePath"));
@@ -189,8 +242,7 @@ export default class LintProvider {
         const args = ["--reportType", "console"];
 
         if (textDocument) {
-            sourcePath = path.relative(vscode.workspace.rootPath, textDocument.uri.fsPath);
-            sourcePath = sourcePath.replace(/\\/g, "/");
+            sourcePath = this.getRelativePath(textDocument);
         }
 
         if (sourcePath) {
