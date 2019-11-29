@@ -7,7 +7,7 @@ const pathToExtract = path.join(__filename, "./../tools");
 const pathToDownload = path.join(pathToExtract, "sonarlint-cli.zip");
 
 const sonarlintCLILocation =
-    "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.2/sonarlint-cli.zip";
+    "https://github.com/nixel2007/sonarlint-cli/releases/download/console-report-1.4/sonarlint-cli.zip";
 
 const options = {
     url: sonarlintCLILocation,

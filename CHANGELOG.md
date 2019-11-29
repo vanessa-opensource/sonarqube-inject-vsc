@@ -1,3 +1,27 @@
+## 2.1.0
+
+**Implemented enhancements:**
+
+* Support SonarQube servers with enabled Organization mode (like SonarCloud.io)
+* Add json-schemas to simplify creating of `sonarlint.json` and `global.json`. See `README.md`
+
+**Bug fixes:**
+
+* Fix extension activation if non-project file is first opened file
+
+## 2.0.0
+
+**Implemented enhancements:**
+
+* Support SonarQube 6.7+
+
+## 1.4.0
+
+**Implemented enhancements:**
+
+* Support multifolder workspaces
+* Stability improvements - update dependencies
+
 ## 1.3.1
 
 **Bug fixes:**
