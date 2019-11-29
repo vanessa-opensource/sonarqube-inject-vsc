@@ -2,6 +2,7 @@
 
 [![Join the chat at https://gitter.im/silverbulleters/sonarqube-inject-vsc](https://badges.gitter.im/silverbulleters/sonarqube-inject-vsc.svg)](https://gitter.im/silverbulleters/sonarqube-inject-vsc?utm_source=badge&utm_medium=badge&utm_content=badge)
 [![GitHub release](https://img.shields.io/github/release/silverbulleters/sonarqube-inject-vsc.svg)](https://github.com/silverbulleters/sonarqube-inject-vsc/blob/master/CHANGELOG.md)
+[![Build Status](https://travis-ci.org/silverbulleters/sonarqube-inject-vsc.svg?branch=develop)](https://travis-ci.org/silverbulleters/sonarqube-inject-vsc)
 [![Dependency Status](https://gemnasium.com/badges/github.com/silverbulleters/sonarqube-inject-vsc.svg)](https://gemnasium.com/github.com/silverbulleters/sonarqube-inject-vsc)
 
 SonarQube support for Visual Studio Code that provides on-the-fly feedback to developers on new bugs and quality issues injected into their code.  
